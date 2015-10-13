@@ -1,5 +1,6 @@
 require 'kim'
 require 'yajl/json_gem'
+require 'em-hiredis'
 require 'redis_startup/version'
 
 class RedisStartup
@@ -11,6 +12,8 @@ class RedisStartup
 
   def initialize(client, opts, &blk)
     @client = client
+    @log = opts[:log]
+    @result_key = opts[:result_key] || 'results'
     @callback = blk
     post_init(opts) unless opts.empty?
   end
@@ -39,13 +42,13 @@ class RedisStartup
     new_client.callback do |*|
       self.class.new(new_client, opts) { |*| iter.next }
     end.errback do |e|
-      p e
+      @log.try(:debug, e)
       iter.next
     end
   end
 
   def _data_warehouse_method(key, res)
-    MODULE.method(format(PREFIX, key).to_sym).call({RESULTS_KEY => res})
+    MODULE.method(format(PREFIX, key).to_sym).call({@result_key => res})
   end
 
   def _iter_list(m, key, iter)

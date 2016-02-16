@@ -6,6 +6,7 @@ require 'redis_startup/version'
 class RedisStartup
   PREFIX = 'store_%s'
   MODULE = ->(){}
+  PASS_CLIENT = 'pass-client'
   def self.data_module(mod)
     suppress_warnings { RedisStartup.const_set(:MODULE, mod) } if mod
   end
@@ -74,11 +75,15 @@ class RedisStartup
   end
 
   def _iter_object(m, key, iter)
-    @client.send(*key) do |res|
-      if res.is_a?(Array)
-	_callback(m, _array_slice_to_hash(res), iter)
-      else
-	_callback(m, _parse(res), iter)
+    if key[0] == PASS_CLIENT
+      _callback(m, {client: @client, key: key[1], done: proc { iter.next }})
+    else
+      @client.send(*key) do |res|
+	if res.is_a?(Array)
+	  _callback(m, _array_slice_to_hash(res), iter)
+	else
+	  _callback(m, _parse(res), iter)
+	end
       end
     end
   end
@@ -87,7 +92,7 @@ class RedisStartup
     JSON.parse(res, symbolize_keys: true) if res
   end
 
-  def _callback(m, res, iter)
+  def _callback(m, res, iter = nil)
     if @default_cb.member?(m)
       _method(m, res)
     else

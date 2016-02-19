@@ -6,6 +6,9 @@ require 'redis_startup/version'
 class RedisStartup
   PREFIX = 'store_%s'
   MODULE = ->(){}
+  
+  # TODO
+  # Explain wtf this is
   PASS_CLIENT = 'pass-client'
   def self.data_module(mod)
     suppress_warnings { RedisStartup.const_set(:MODULE, mod) } if mod

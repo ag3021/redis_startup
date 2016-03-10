@@ -7,21 +7,13 @@ Gem::Specification.new do |spec|
   spec.name          = "redis_startup"
   spec.version       = RedisStartup::VERSION
   spec.authors       = ["Andy Ganchrow"]
-  spec.email         = ["andy.addington@ganchrow.com"]
+  spec.email         = ["andy@ganchrow.com"]
 
   spec.summary       = %q{Uses EM::Iterator to load data aynschonrously before arbitrary application state.}
-  spec.description       = %q{Uses EM::Iterator to load data aynschonrously before arbitrary application state.}
+  spec.description   = %q{Uses EM::Iterator to load data aynschonrously before arbitrary application state.}
   spec.homepage      = "http://bitbucket.org/andy_ganchrow/redis_startup.git"
 
-  # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
-  # delete this section to allow pushing this gem to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
-  end
-
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|bin)/}) }
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]

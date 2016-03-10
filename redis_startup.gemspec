@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Uses EM::Iterator to load data aynschonrously before arbitrary application state.}
   spec.description   = %q{Uses EM::Iterator to load data aynschonrously before arbitrary application state.}
-  spec.homepage      = "http://bitbucket.org/andy_ganchrow/redis_startup.git"
+  spec.homepage      = "http://github.com/ag3021redis_startup.git"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|bin)/}) }
   spec.bindir        = "exe"

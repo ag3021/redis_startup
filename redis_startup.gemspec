@@ -26,7 +26,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'kim', '~> 0.5'
   spec.add_dependency 'yajl-ruby', '~> 1.2'
   spec.add_dependency 'em-hiredis', '~> 0.3'
 

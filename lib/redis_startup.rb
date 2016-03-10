@@ -44,7 +44,7 @@ class RedisStartup
   private
 
   def _proc((m, key), iter = nil)
-    return iter.try(:next) unless key
+    return iter && iter.next unless key
     if(key.is_a?(Array))
       _iter_object(m, key, iter)
     elsif key.is_a?(Hash) && (key.key?(:redis) || key.key?(:uri))
@@ -108,7 +108,7 @@ class RedisStartup
     else
       @proc.call(m, res)
     end
-    @log.try(:debug, "Loaded #{m}")
+    @log(debug, "Loaded #{m}")
     iter.next if iter
   end
 

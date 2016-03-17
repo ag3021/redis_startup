@@ -108,7 +108,7 @@ class RedisStartup
     else
       @proc.call(m, res)
     end
-    @log(debug, "Loaded #{m}")
+    @log.debug("Loaded #{m}") if @log
     iter.next if iter
   end
 
